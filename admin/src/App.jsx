@@ -5,28 +5,33 @@ import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthCheck from "./components/AuthCheck";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import AdminContext from "./context/AdminContext";
 import Dashboard from "./pages/Admin/Dashboard";
 import AllAppointments from "./pages/Admin/AllAppointments";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import DoctorsList from "./pages/Admin/DoctorsList";
+import DoctorContext from "./context/DoctorContext";
+import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
+import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
+import DoctorProfile from "./pages/Doctor/DoctorProfile";
 
 const App = () => {
-    const {adminToken,setAdminToken} = useContext(AdminContext)
-    useEffect(() => {
-      const aToken = localStorage.getItem('token')
-      if (aToken) {
-        setAdminToken(aToken)
-      }else {
-        setAdminToken(false)
-      }
-    }, [])
+    const {adminToken} = useContext(AdminContext)
+    const {docToken} = useContext(DoctorContext)
+    // useEffect(() => {
+    //   const aToken = localStorage.getItem('token')
+    //   if (aToken) {
+    //     setAdminToken(aToken)
+    //   }else {
+    //     setAdminToken(false)
+    //   }
+    // }, [])
     
   const router = createBrowserRouter([
     {
       element: (
-        <AuthCheck adminToken={adminToken}>
+        <AuthCheck adminToken={adminToken || docToken}>
           <Adminlayout />
         </AuthCheck>
       ),
@@ -54,6 +59,19 @@ const App = () => {
         {
           path: "/doctor-list",
           element: <DoctorsList />,
+        },
+        //Doctor routes
+        {
+          path: "/doctor-dashboard",
+          element: <DoctorDashboard />,
+        },
+        {
+          path: "/doctor-appointments",
+          element: <DoctorAppointments />,
+        },
+        {
+          path: "/doctor-profile",
+          element: <DoctorProfile />,
         },
       ]
     },

@@ -11,19 +11,11 @@ import Appointment from "./pages/Appointment";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthCheck from "./components/AuthCheck";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import AppContext from "./context/AppContext";
 
 const App = () => {
-  const {token,setToken} = useContext(AppContext)
-  useEffect(() => {
-    const uToken = localStorage.getItem('userToken')
-    if (uToken) {
-      setToken(uToken) 
-    }else{
-      setToken(false)
-    }
-  }, [token])
+  const {token} = useContext(AppContext)
   const router = createBrowserRouter([
     {
       element: (
